@@ -44,7 +44,7 @@ namespace Mission4
             return result;
         }
 
-        public Tuple GameOver(string[] gameBoard)
+        public int GameOver(string[] gameBoard)
         {
             // Winning combinations
             //Horizontal 012, 345, 678
@@ -52,31 +52,30 @@ namespace Mission4
             //Diagonal 048, 642
             string[] winningCombinations = new string[8] {"012","345","678","036", "147", "258", "048", "642" };
 
-            //return if the game is over and the team that won (Team 1 = X, Team 2 = O)
-
+            int gameResult = 0;
 
             for (int i = 0; i < winningCombinations.Length; i++)//Going through every winning combination
             {
                 string testString = "";
-                
+                string combo = winningCombinations[i];
 
                 for (int x = 0; x < 3; x++)
                 {
-                    testString += gameBoard[i];
+                    testString += gameBoard[combo[x]];
                     if (testString.Length == 3)
                     {
                         if (testString == "XXX")
                         {
-                            
+                            gameResult = 1;
                         }
                         else if (testString == "OOO")
                         {
-                            
+                            gameResult=2;
                         }
                     }
                 }
             }
-            return gameResults;
+            return gameResult;
         }
     }
 }
