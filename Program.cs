@@ -1,7 +1,9 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-Method m = new Method();
+using Mission4;
+
+Methods m = new Methods();
 
 string[] gameBoard = new string[9] { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 Tuple gameResult;
