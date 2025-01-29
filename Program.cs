@@ -12,7 +12,7 @@ internal class Program
         Methods m = new Methods();
 
         string[] gameBoard = new string[9] { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-        var gameResult = (true , "");
+        int gameResult;
         string position;
 
         // welcome to the program
@@ -47,13 +47,13 @@ internal class Program
             // checks if a player has won
             gameResult = m.GameOver(gameBoard);
 
-        } while (!gameResult.Item1);
+        } while (gameResult == 0);
 
         Console.WriteLine(DisplayWinner());
         // prints out who won the game
         string DisplayWinner()
         {
-            return ($"Congragulations {gameResult.Item2}. You Won!");
+            return ($"Congragulations Player {gameResult}. You Won!");
         }
     }
 }
