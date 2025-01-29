@@ -1,7 +1,5 @@
 ﻿namespace Mission4;
 
-using System.ComponentModel.DataAnnotations;
-
 internal class Program
 {
     internal static void Main(string[] args)
