@@ -44,6 +44,39 @@ namespace Mission4
             return result;
         }
 
+        //TURN METHOD
+        public (string[], int) PlayerTurn(string[] gameBoard, int playerNumber, int turnNum)
+        {
+            string displayLetter = "";
+            string position = "";
+            //Incrementing turnNum
+            turnNum++;
+
+            //Determining 'X' or 'O'
+            if (playerNumber == 1)
+            {
+                displayLetter = "X";
+            }
+            else if (playerNumber == 2)
+            {
+                displayLetter = "O";
+            }
+
+            //Turn 
+            // Gets player inputs, makes sure they are valid, and updates the board game array for each guess
+
+            do
+            {
+                Console.WriteLine($"\nTurn {turnNum}: Player {playerNumber}");
+                position = Console.ReadLine();
+
+            } while (!ValidateGuess(position, gameBoard));
+
+            gameBoard[int.Parse(position) - 1] = displayLetter;
+
+            return (gameBoard, turnNum);
+        }
+
         public int GameOver(string[] gameBoard, int turnNum)
         {
             // Winning combinations
@@ -97,6 +130,33 @@ namespace Mission4
                 winnerString = $"\nIt's a tie!";
             }
             return winnerString;
+        }
+
+        public bool PlayAgain()
+        {
+            bool play = false;
+            string response = "";
+            Console.WriteLine("Would you like to play again? (Y/N)");
+            do
+            {
+                response = Console.ReadLine().ToUpper(); // Normalize input to uppercase
+
+                if (response == "Y")
+                {
+                    play = true;
+                }
+                else if (response == "N")
+                {
+                    play = false;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid response (Y/N).");
+                }
+            }
+            while (response != "Y" && response != "N"); // Corrected condition
+
+            return play;
         }
     }
 }

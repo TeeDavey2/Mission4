@@ -11,69 +11,53 @@ internal class Program
         // initializes method class and other variables
         Methods m = new Methods();
 
-        string[] gameBoard = new string[9] { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-        int gameResult;
-        string position;
-
-        // welcome to the program
-        Console.WriteLine("Welcome to the Tic-Tac-Toe Game!\n");
-
-        //Keeping track of turns
-        int turnNum = 0;
-
-        // loops through the game until a player has won the game
-        do
+        while (true)
         {
-            turnNum++;
-            Console.WriteLine($"\nTurn: {turnNum}");
+            string[] gameBoard = new string[9] { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+            int gameResult;
+            string position;
+            //Keeping track of turns
+            int turnNum = 0;
 
+            // welcome to the program
+            Console.WriteLine("Welcome to the Tic-Tac-Toe Game!");
+            Console.WriteLine("To select a spot, enter the number in the box to replace it with your letter!\n");
+
+            // Displays board immediately
             m.DisplayBoard(gameBoard);
 
-            // gets player inputs, makes sure they are valid, and updates the board game array for each guess
-            // Player 1:
-            //Increase turn number
-
+            // loops through the game until a player has won the game
             do
             {
-                Console.WriteLine("\nPlayer 1 - Type the number of a tile to play: ");
-                position = Console.ReadLine();
+                // Player 1 Turn
+                (gameBoard, turnNum) = m.PlayerTurn(gameBoard, 1, turnNum);
+                m.DisplayBoard(gameBoard);
 
-            } while (!m.ValidateGuess(position, gameBoard));
+                //Checking for wins or ties
+                gameResult = m.GameOver(gameBoard, turnNum);
+                if (gameResult == 1 | gameResult == 3)
+                {
+                    break;
+                }
 
-            gameBoard[int.Parse(position) - 1] = "X";
+                //Player 2 Turn
+                (gameBoard, turnNum) = m.PlayerTurn(gameBoard, 2, turnNum);
+                m.DisplayBoard(gameBoard);
 
-            m.DisplayBoard(gameBoard);
 
+                // checks if a player has won
+                gameResult = m.GameOver(gameBoard, turnNum);
+            } while (gameResult == 0);
 
-            //Checking if the game is over
-            gameResult = m.GameOver(gameBoard, turnNum);
-            if (gameResult == 1 | gameResult == 3)
+            Console.WriteLine(m.DisplayWinner(gameResult));
+
+            //Play again logic
+            bool playAgain = m.PlayAgain();
+            if (!playAgain)
             {
+                Console.WriteLine("Thanks for playing! Goodbye!");
                 break;
             }
-
-            //Player 2
-            //Increase turn number
-            turnNum++;
-            Console.WriteLine($"\nTurn: {turnNum}");
-
-            do
-            {
-                Console.WriteLine("\nPlayer 2 - Type the number of a tile to play: ");
-                position = Console.ReadLine();
-
-            } while (!m.ValidateGuess(position, gameBoard));
-
-            // Replacing number with 'O'
-            gameBoard[int.Parse(position) - 1] = "O";
-
-            // checks if a player has won
-            gameResult = m.GameOver(gameBoard, turnNum);
-        } while (gameResult == 0);
-
-        Console.WriteLine(m.DisplayWinner(gameResult));
+        }
     }
 }
-
-
-
