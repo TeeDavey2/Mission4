@@ -16,7 +16,6 @@ internal class Program
             string[] gameBoard = new string[9] { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
             int gameResult;
             string position;
-            //Keeping track of turns
             int turnNum = 0;
 
             // welcome to the program
@@ -30,7 +29,18 @@ internal class Program
             do
             {
                 // Player 1 Turn
-                (gameBoard, turnNum) = m.PlayerTurn(gameBoard, 1, turnNum);
+                //Incrementing turn
+                turnNum++;
+                // Gets player inputs, makes sure they are valid, and updates the board game array for each guess
+                do
+                {
+                    Console.WriteLine($"\nTurn {turnNum}: Player 1");
+                    position = Console.ReadLine();
+
+                } while (!m.ValidateGuess(position, gameBoard));
+
+                // Updating gameboard
+                gameBoard[int.Parse(position) - 1] = "X";
                 m.DisplayBoard(gameBoard);
 
                 //Checking for wins or ties
@@ -41,7 +51,18 @@ internal class Program
                 }
 
                 //Player 2 Turn
-                (gameBoard, turnNum) = m.PlayerTurn(gameBoard, 2, turnNum);
+                //Incrementing turn
+                turnNum++;
+                // Gets player inputs, makes sure they are valid, and updates the board game array for each guess
+                do
+                {
+                    Console.WriteLine($"\nTurn {turnNum}: Player 2");
+                    position = Console.ReadLine();
+
+                } while (!m.ValidateGuess(position, gameBoard));
+
+                // Updating gameboard
+                gameBoard[int.Parse(position) - 1] = "O";
                 m.DisplayBoard(gameBoard);
 
 
@@ -49,15 +70,18 @@ internal class Program
                 gameResult = m.GameOver(gameBoard, turnNum);
             } while (gameResult == 0);
 
+            //Displays the winner/loser or tie
             Console.WriteLine(m.DisplayWinner(gameResult));
 
-            //Play again logic
+            //Option to play again 
             bool playAgain = m.PlayAgain();
             if (!playAgain)
             {
                 Console.WriteLine("Thanks for playing! Goodbye!");
                 break;
             }
+            //Adding an extra line for aesthetic purposes
+            Console.WriteLine();
         }
     }
 }
