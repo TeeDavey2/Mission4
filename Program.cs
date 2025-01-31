@@ -18,15 +18,24 @@ internal class Program
         // welcome to the program
         Console.WriteLine("Welcome to the Tic-Tac-Toe Game!\n");
 
+        //Keeping track of turns
+        int turnNum = 0;
+
         // loops through the game until a player has won the game
         do
         {
+            turnNum++;
+            Console.WriteLine($"\nTurn: {turnNum}");
+
             m.DisplayBoard(gameBoard);
-            
+
             // gets player inputs, makes sure they are valid, and updates the board game array for each guess
+            // Player 1:
+            //Increase turn number
+
             do
             {
-                Console.WriteLine("Player 1 Please enter a number below to mark a position on the game board: ");
+                Console.WriteLine("\nPlayer 1 - Type the number of a tile to play: ");
                 position = Console.ReadLine();
 
             } while (!m.ValidateGuess(position, gameBoard));
@@ -35,26 +44,34 @@ internal class Program
 
             m.DisplayBoard(gameBoard);
 
+
+            //Checking if the game is over
+            gameResult = m.GameOver(gameBoard, turnNum);
+            if (gameResult == 1 | gameResult == 3)
+            {
+                break;
+            }
+
+            //Player 2
+            //Increase turn number
+            turnNum++;
+            Console.WriteLine($"\nTurn: {turnNum}");
+
             do
             {
-                Console.WriteLine("\nPlayer 2 Please enter a number below to mark a position on the game board: ");
+                Console.WriteLine("\nPlayer 2 - Type the number of a tile to play: ");
                 position = Console.ReadLine();
 
             } while (!m.ValidateGuess(position, gameBoard));
 
+            // Replacing number with 'O'
             gameBoard[int.Parse(position) - 1] = "O";
-            
-            // checks if a player has won
-            gameResult = m.GameOver(gameBoard);
 
+            // checks if a player has won
+            gameResult = m.GameOver(gameBoard, turnNum);
         } while (gameResult == 0);
 
-        Console.WriteLine(DisplayWinner());
-        // prints out who won the game
-        string DisplayWinner()
-        {
-            return ($"Congragulations Player {gameResult}. You Won!");
-        }
+        Console.WriteLine(m.DisplayWinner(gameResult));
     }
 }
 
